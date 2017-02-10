@@ -1,24 +1,24 @@
-## README
+## Nap Reservations
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a spike to mimic a reservation system in production that has run into an
+issue where future appointments are not reflected correctly when saved as UTC.
 
-Things you may want to cover:
+This will be built as closely to the production version as possible, while not
+including many other areas of the app.  This spike will be unlike typical spikes
+that may not have testing because I need to verify so many different appointment
+scenarios, I need to automate this.  This is also a good opporunity to introduce
+testing into franken-we-don't-need-no-tests ecosphere.  I will port the specs
+here to the production app along with the solution.
 
-* Ruby version
+Current reservation attributes of note and their datatypes:
+tour_date DateTime
+tour_time String
 
-* System dependencies
+Additional reservation attributes I'm going to collect are:
+timezone String
+utc_offset Float
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+By keeping the app timezone to UTC and setting the local timezone per
+reservation, as well as keeping track of the UTC Offset, we can be more accurate
+even when regions change their timezone policies (opting in/out of Daylight
+Savings).
