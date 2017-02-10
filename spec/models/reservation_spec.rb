@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Reservation, type: :model do
-  let(:reservation) { FactoryGirl.create(:reservation) }
   let(:res_90days) {
     FactoryGirl.build(:reservation, tour_date: (DateTime.now + 90.days))
   }
@@ -18,21 +17,18 @@ RSpec.describe Reservation, type: :model do
   let(:res_sat) {
     additional_days = 6 - DateTime.now.beginning_of_day.wday
     FactoryGirl.build(
-      :reservation, tour_date: (DateTime.now.beginning_of_day + additional_days.days)
+      :reservation,
+      tour_date: (DateTime.now.beginning_of_day + additional_days.days)
     )
   }
 
   let(:res_sun) {
     additional_days = 7 - DateTime.now.beginning_of_day.wday
     FactoryGirl.build(
-      :reservation, tour_date: (DateTime.now.beginning_of_day + additional_days.days)
+      :reservation,
+      tour_date: (DateTime.now.beginning_of_day + additional_days.days)
     )
   }
-
-  it "has a valid factory" do
-    expect(reservation).to be_valid
-  end
-
   %i(name email phone tour_date tour_time party_size children_u12).each do |a|
     it { should validate_presence_of(a) }
   end
