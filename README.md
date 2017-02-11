@@ -10,13 +10,13 @@ scenarios, I need to automate this.  This is also a good opporunity to introduce
 testing into franken-we-don't-need-no-tests ecosphere.  I will port the specs
 here to the production app along with the solution.
 
-Current reservation attributes of note and their datatypes:
-tour_date DateTime
-tour_time String
+*Current* reservation attributes of note and their datatypes:
+- tour_date DateTime
+- tour_time String
 
-Additional reservation attributes I'm going to collect are:
-timezone String
-utc_offset Float
+*Additional* reservation attributes I'm going to collect are:
+- timezone String
+- utc_offset Float
 
 By keeping the app timezone to UTC and setting the local timezone per
 reservation, as well as keeping track of the UTC Offset, we can be more accurate

@@ -1,4 +1,44 @@
 class Reservation < ApplicationRecord
+  include AASM
+
+  aasm do
+    state :pending, :initial => true
+    state :confirmed
+    state :rejected
+    state :checkedin
+    state :completed
+    state :noshowed
+    state :archived
+
+    event :confirm do
+      transitions :to => :confirmed
+    end
+
+    event :reject do
+      transitions :to => :rejected
+    end
+
+    event :checkin do
+      transitions :to => :checkedin
+    end
+
+    event :complete do
+      transitions :to => :completed, :from => [:confirmed, :noshowed, :checkedin]
+    end
+
+    event :noshow do
+      transitions :to => :noshowed, :from => [:confirmed]
+    end
+
+    event :archive do
+      transitions :to => :archived, :from => [:noshowed, :completed]
+    end
+
+    event :reset do
+      transitions :to => :pending
+    end
+  end
+
   validates :party_size,
     numericality: { only_integer: true , greater_than_or_equal_to: 1}
   validates :children_u12,
