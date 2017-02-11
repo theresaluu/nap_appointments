@@ -43,6 +43,10 @@ class Reservation < ApplicationRecord
     numericality: { only_integer: true , greater_than_or_equal_to: 1}
   validates :children_u12,
     numericality: { only_integer: true , greater_than_or_equal_to: 0}
+  validates :tour_time, inclusion:{
+    in: ["10:00AM", "10:30AM","11:30AM", "12:00PM", "12:30PM", "1:00PM",
+         "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM"]
+  }
 
   %i(name email phone tour_date tour_time party_size children_u12)
     .each do |a|
@@ -64,7 +68,9 @@ class Reservation < ApplicationRecord
   #if we are indeed keeping tour_date as DateTime, we have to keep ensure that
   #tours can't be booked until the next day at opening hours
   def tour_date_cannot_be_today
-    if tour_date.present? && (tour_date < (DateTime.now + 1.day).change(hour: 10))
+    if tour_date.present? &&
+      (tour_date < (DateTime.current.beginning_of_day + 1.day).change(hour: 10))
+
       errors.add(:tour_date, "tours cannot be booked for same day appointments")
     end
   end

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Reservation, type: :model do
+  let(:reservation) { FactoryGirl.build(:reservation) }
+
   let(:res_90days) {
     FactoryGirl.build(:reservation, tour_date: (DateTime.now + 90.days))
   }
@@ -9,9 +11,16 @@ RSpec.describe Reservation, type: :model do
     FactoryGirl.build(:reservation, tour_date: (DateTime.now.noon))
   }
 
-  let(:res_tomorrow_in_biz_hr) {
-    FactoryGirl.build(:reservation, tour_date: (DateTime.now + 1.day)
-                      .change(hour: 11))
+  let(:after_hours) {
+    FactoryGirl.build(:reservation, tour_time: "5:00PM")
+  }
+
+  let(:early_hours) {
+    FactoryGirl.build(:reservation, tour_time: "6:00AM")
+  }
+
+  let(:biz_hours) {
+    FactoryGirl.build(:reservation, tour_time: "1:00PM")
   }
 
   let(:res_sat) {
@@ -29,6 +38,7 @@ RSpec.describe Reservation, type: :model do
       tour_date: (DateTime.now.beginning_of_day + additional_days.days)
     )
   }
+
   %i(name email phone tour_date tour_time party_size children_u12).each do |a|
     it { should validate_presence_of(a) }
   end
@@ -44,11 +54,15 @@ RSpec.describe Reservation, type: :model do
       .only_integer
   end
 
-
   it "allows tour dates to happen the next day up to 60 days out" do
     expect(res_90days).not_to be_valid
     expect(res_today).not_to be_valid
-    expect(res_tomorrow_in_biz_hr).to be_valid
+  end
+
+  it "does not allow bookings outside business hours" do
+    expect(after_hours).not_to be_valid
+    expect(early_hours).not_to be_valid
+    expect(biz_hours).to be_valid
   end
 
   it "prevents users from booking saturday tours" do
@@ -57,6 +71,10 @@ RSpec.describe Reservation, type: :model do
 
   it "prevents users from booking sunday tours" do
     expect(res_sun).not_to be_valid
+  end
+
+  it "reservations are initially set to 'pending'" do
+    expect(reservation.aasm_state).to eq("pending")
   end
 
 end
