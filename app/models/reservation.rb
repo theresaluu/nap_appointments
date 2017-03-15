@@ -69,7 +69,7 @@ class Reservation < ApplicationRecord
   #tours can't be booked until the next day at opening hours
   def tour_date_cannot_be_today
     if tour_date.present? &&
-      (tour_date < (DateTime.current.beginning_of_day + 1.day).change(hour: 10))
+      (tour_date < (DateTime.current.beginning_of_day + 1.day).change(hour: 0))
 
       errors.add(:tour_date, "tours cannot be booked for same day appointments")
     end
