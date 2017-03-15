@@ -80,4 +80,32 @@ class Reservation < ApplicationRecord
       errors.add(:tour_date, "tours cannot be booked for the weekend")
     end
   end
+
+  def self.tour_times
+    [
+      ["10:00AM"],
+      ["10:30AM"],
+      ["11:30AM"],
+      ["12:00PM"],
+      ["12:30PM"],
+      ["1:00PM"],
+      ["1:30PM"],
+      ["2:00PM"],
+      ["2:30PM"],
+      ["3:00PM"],
+      ["3:30PM"],
+      ["4:00PM"]
+    ]
+  end
+
+  def self.tour_numbers_children
+    [
+      [0],
+      [1],
+      [2],
+      [3],
+      [4]
+    ]
+  end
+
 end

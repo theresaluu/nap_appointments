@@ -1,0 +1,122 @@
+<%= form_for(@reservation) do |f| %>
+  <% if @reservation.errors.any? %>
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="error_explanation" class="control-group error alert alert-block alert-error">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <p><strong><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:
+            </strong></p>
+            <ul>
+              <% @reservation.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <% end %>
+
+  <%= f.hidden_field :aasm_state %>
+  <%= f.hidden_field :consent_to_email %>
+
+  <div class="control-group">
+    <%= f.label "Name", :class=>"control-label" %>
+    <div class="controls">
+       <%= f.text_field :name, :class=>"input-xlarge", :placeholder => "" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :phone, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.text_field :phone, :class=>"input-medium", :placeholder => "" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :email, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.text_field :email, :class=>"input-xxlarge", :placeholder => "" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :city, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.text_field :city, :class=>"input-block", :placeholder => "" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :state, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.select(:state, options_for_select(us_states, @reservation.state), {:include_blank => true}, :class=>"")%>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :zip, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.text_field :zip, :class=>"input-small", :placeholder => "" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :country, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.select(:country, options_for_select(country_list, @reservation.country), {:include_blank => true}, :class=>"")%>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :tour_date, :class=>"control-label" %>
+    <div class="controls">
+      <div class="input-prepend date datepicker" data-date="<%=@reservation.tour_date%>" data-date-format="yyyy-mm-dd">
+        <span class="add-on"><i class="icon-calendar"></i></span>
+        <%= f.text_field :tour_date %>
+      </div>
+      <span class="help-block"></span>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :tour_time, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.select(:tour_time, Reservation.tour_times, {:include_blank => true}, :class=>"")%>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :party_size, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.text_field :party_size, :class=>"input-small"%>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :children_u12, :class=>"control-label" %>
+    <div class="controls">
+       <%= f.select(:children_u12, Reservation.tour_numbers_children, {:include_blank => true}, :class=>"")%>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label "Where are they staying?", :class=>"control-label" %>
+    <div class="controls">
+       <%= f.text_field :maui_stay, :class=>"input-xlarge", :placeholder => "" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit "Save Reservation", :class=>"btn btn-primary btn-large" %>
+    </div>
+  </div>
+<% end %>
+
+<%content_for :footer_jquery do%>
+    jQuery(".datepicker").datepicker({
+        datesDisabled: ["2015-05-25","2015-09-07"]
+    });
+    //jQuery(".typeahead").typeahead();
+<%end%>
