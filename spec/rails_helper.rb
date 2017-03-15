@@ -7,6 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'capybara/rspec'
+require 'zonebie/rspec'
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
