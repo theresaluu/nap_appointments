@@ -60,7 +60,7 @@ class Reservation < ApplicationRecord
   private
 
   def tour_date_cannot_be_out_of_range
-    if tour_date.present? && (tour_date > DateTime.now.beginning_of_day + 62.days)
+    if tour_date.present? && (tour_date > DateTime.current.beginning_of_day + 62.days)
       errors.add(:tour_date, "tours cannot be booked this far in advance")
     end
   end

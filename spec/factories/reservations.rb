@@ -14,7 +14,7 @@ FactoryGirl.define do
     maui_stay         { ["Marriott", "Hilton", "AirBnB"].sample }
     admin_id          { rand(1..4) }
     tour_date         {
-      random_date = DateTime.now.beginning_of_day + (rand(1..14).days)
+      random_date = DateTime.current.beginning_of_day + (rand(1..14).days)
 
       #if this is a weekend, this will randomly add 2-4 days to ensure weekday
       random_date = random_date.wday === (0 || 6) ?

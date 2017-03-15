@@ -4,11 +4,20 @@ RSpec.describe Reservation, type: :model do
   let(:reservation) { FactoryGirl.build(:reservation) }
 
   let(:res_90days) {
-    FactoryGirl.build(:reservation, tour_date: (DateTime.now + 90.days))
+    FactoryGirl.build(:reservation, tour_date: (DateTime.current + 90.days))
   }
 
   let(:res_today) {
-    FactoryGirl.build(:reservation, tour_date: (DateTime.now.noon))
+    FactoryGirl.build(:reservation, tour_date: (DateTime.current.noon))
+  }
+
+  let(:mtn_res) {
+    Time.zone = "Mountain Time (US & Canada)"
+    new_created_time = Time.zone.parse("2017-01-26 07:48:27")
+    new_res_time = Time.zone.parse("2017-01-28 00:00:00") - 6.hours
+    Timecop.freeze new_created_time
+    FactoryGirl.build(:reservation,
+                      tour_date: new_res_time)
   }
 
   let(:after_hours) {
@@ -20,22 +29,30 @@ RSpec.describe Reservation, type: :model do
   }
 
   let(:biz_hours) {
-    FactoryGirl.build(:reservation, tour_time: "1:00PM")
+    FactoryGirl.build(
+      :reservation, tour_time: "1:00PM", tour_date: (
+        if !DateTime.current.saturday? && !DateTime.current.friday?
+          (DateTime.current + 1.day)
+        else
+          (DateTime.current + 3.day)
+        end
+      )
+    )
   }
 
   let(:res_sat) {
-    additional_days = 6 - DateTime.now.beginning_of_day.wday
+    additional_days = 6 - DateTime.current.beginning_of_day.wday
     FactoryGirl.build(
       :reservation,
-      tour_date: (DateTime.now.beginning_of_day + additional_days.days)
+      tour_date: (DateTime.current.beginning_of_day + additional_days.days)
     )
   }
 
   let(:res_sun) {
-    additional_days = 7 - DateTime.now.beginning_of_day.wday
+    additional_days = 7 - DateTime.current.beginning_of_day.wday
     FactoryGirl.build(
       :reservation,
-      tour_date: (DateTime.now.beginning_of_day + additional_days.days)
+      tour_date: (DateTime.current.beginning_of_day + additional_days.days)
     )
   }
 
@@ -77,4 +94,8 @@ RSpec.describe Reservation, type: :model do
     expect(reservation.aasm_state).to eq("pending")
   end
 
+  it "reservations on a mtn timezone" do
+    expect(mtn_res).to be_valid
+  end
+  Timecop.return
 end
