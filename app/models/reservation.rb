@@ -57,6 +57,7 @@ class Reservation < ApplicationRecord
   validate :tour_date_cannot_be_today
   validate :tour_date_cannot_be_weekend
 
+  store :time_and_date_data, accessors: [:utc_offset, :parsed_date_from_form]
   private
 
   def tour_date_cannot_be_out_of_range

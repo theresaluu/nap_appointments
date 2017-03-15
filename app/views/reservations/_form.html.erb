@@ -18,6 +18,7 @@
 
   <%= f.hidden_field :aasm_state %>
   <%= f.hidden_field :consent_to_email %>
+  <%= f.hidden_field :tour_date %>
 
   <div class="control-group">
     <%= f.label "Name", :class=>"control-label" %>
@@ -69,11 +70,11 @@
   </div>
 
   <div class="control-group">
-    <%= f.label :tour_date, :class=>"control-label" %>
+    <%= label_tag :parsed_date_from_form, "Date", :class=>"control-label" %>
     <div class="controls">
       <div class="input-prepend date datepicker" data-date="<%=@reservation.tour_date%>" data-date-format="yyyy-mm-dd">
         <span class="add-on"><i class="icon-calendar"></i></span>
-        <%= f.text_field :tour_date %>
+        <%= text_field_tag :parsed_date_from_form %>
       </div>
       <span class="help-block"></span>
     </div>

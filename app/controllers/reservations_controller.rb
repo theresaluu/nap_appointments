@@ -68,6 +68,7 @@ class ReservationsController < ApplicationController
                                         :zip, :country, :consent_to_email,
                                         :message, :admin_id, :tour_date,
                                         :tour_time, :party_size, :children_u12,
-                                        :maui_stay, :aasm_state)
+                                        :maui_stay, :aasm_state, :utc_offset,
+                                        :parsed_date_from_form)
   end
 end
