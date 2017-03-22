@@ -21,16 +21,16 @@ RSpec.describe Reservation, type: :model do
   }
 
   let(:after_hours) {
-    FactoryGirl.build(:reservation, tour_time: "5:00PM")
+    FactoryGirl.build(:reservation, tour_time: "5:00 PM")
   }
 
   let(:early_hours) {
-    FactoryGirl.build(:reservation, tour_time: "6:00AM")
+    FactoryGirl.build(:reservation, tour_time: "6:00 AM")
   }
 
   let(:biz_hours) {
     FactoryGirl.build(
-      :reservation, tour_time: "1:00PM", tour_date: (
+      :reservation, tour_time: "1:00 PM", tour_date: (
         if !DateTime.current.saturday? && !DateTime.current.friday?
           (DateTime.current + 1.day)
         else

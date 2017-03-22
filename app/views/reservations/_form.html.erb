@@ -83,7 +83,7 @@
   <div class="control-group">
     <%= f.label :tour_time, :class=>"control-label" %>
     <div class="controls">
-       <%= f.select(:tour_time, Reservation.tour_times, {:include_blank => true}, :class=>"")%>
+       <%= f.select(:tour_time, @tour_times, {:include_blank => true}, :class=>"")%>
     </div>
   </div>
 

@@ -44,8 +44,8 @@ class Reservation < ApplicationRecord
   validates :children_u12,
     numericality: { only_integer: true , greater_than_or_equal_to: 0}
   validates :tour_time, inclusion:{
-    in: ["10:00AM", "10:30AM","11:30AM", "12:00PM", "12:30PM", "1:00PM",
-         "1:30PM", "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM"]
+    in: ["10:00 AM", "10:30 AM","11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM",
+         "1:30 PM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"]
   }
 
   %i(name email phone tour_date tour_time party_size children_u12)
@@ -77,25 +77,25 @@ class Reservation < ApplicationRecord
   end
 
   def tour_date_cannot_be_weekend
-    if tour_date.present? && (tour_date.wday === 6  || tour_date.wday ===0)
+    if tour_date.present? && (tour_date.wday == 6  || tour_date.wday == 0)
       errors.add(:tour_date, "tours cannot be booked for the weekend")
     end
   end
 
   def self.tour_times
     [
-      ["10:00AM"],
-      ["10:30AM"],
-      ["11:30AM"],
-      ["12:00PM"],
-      ["12:30PM"],
-      ["1:00PM"],
-      ["1:30PM"],
-      ["2:00PM"],
-      ["2:30PM"],
-      ["3:00PM"],
-      ["3:30PM"],
-      ["4:00PM"]
+      "10:00 AM",
+      "10:30 AM",
+      "11:30 AM",
+      "12:00 PM",
+      "12:30 PM",
+      "1:00 PM",
+      "1:30 PM",
+      "2:00 PM",
+      "2:30 PM",
+      "3:00 PM",
+      "3:30 PM",
+      "4:00 PM"
     ]
   end
 

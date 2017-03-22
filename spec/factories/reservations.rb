@@ -13,16 +13,16 @@ FactoryGirl.define do
     message           { Faker::Hipster.sentences(2) }
     maui_stay         { ["Marriott", "Hilton", "AirBnB"].sample }
     admin_id          { rand(1..4) }
+    tour_time         {
+      ["10:00 AM", "10:30 AM","11:30 AM", "12:00 PM", "12:30 PM", "1:00 PM", "1:30 PM",
+       "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"].sample
+    }
     tour_date         {
       random = DateTime.current.beginning_of_day + (rand(2..14).days)
 
       #if this is a weekend, this will randomly add 2-4 days to ensure weekday
       random_date = random.wday === (0 || 6) ?
-        (random + rand(2..5).days) : random
-    }
-    tour_time         {
-      ["10:00AM", "10:30AM","11:30AM", "12:00PM", "12:30PM", "1:00PM", "1:30PM",
-       "2:00PM", "2:30PM", "3:00PM", "3:30PM", "4:00PM"].sample
+        (random + 2.days) : random
     }
     party_size        { rand(1..20) }
     children_u12      { rand(0..4) }

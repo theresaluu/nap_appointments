@@ -5,12 +5,6 @@ class ReservationsController < ApplicationController
   def create
     @reservation = Reservation.new(ressie_params)
 
-    #31 lines of code to format the Tour Date
-    #TODO: if it is the only thing you do at work this year, please refactor
-    #this, Theresa. This is bananas.
-    logger.info @reservation.tour_date.inspect
-    logger.info params[:reservation][:tour_date].inspect
-
     if !@reservation.tour_date.nil?
       logger.info "Ressie Tour Date not nil"
       logger.info "Ressie Tour Date data type is = |#{@reservation.tour_date.class}|"
@@ -52,6 +46,7 @@ class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
     @reservation.country = "UNITED STATES"
+    @tour_times = Reservation.tour_times
 
     respond_to do |format|
       format.html
