@@ -26,7 +26,8 @@ class ReservationsController < ApplicationController
         @reservation.tour_date = Date.strptime(params[:reservation][:tour_date].to_s, "%Y-%m-%d")
       else
         logger.info "Reservation Tour Date class is year last"
-        @reservation.tour_date = Date.strptime(params[:reservation][:tour_date].to_s, "%m/%d/%Y")
+        reservation_string_date_time = params[:parsed_date_from_form].to_s + " " + params[:reservation][:tour_time].to_s + " " + "-10:00"
+        @reservation.tour_date = DateTime.strptime(reservation_string_date_time, "%m/%d/%Y %I:%M %p %:z")
       end
     else
       logger.info "Reservation Tour Date is NIL"
