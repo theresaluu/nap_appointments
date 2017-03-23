@@ -4,6 +4,7 @@ class ReservationsController < ApplicationController
   end
   def create
     @reservation = Reservation.new(ressie_params)
+    @tour_times = Reservation.tour_times
 
     if !@reservation.tour_date.nil?
       logger.info "Ressie Tour Date not nil"
@@ -17,7 +18,8 @@ class ReservationsController < ApplicationController
               Date.strptime(params[:reservation][:tour_date].to_s, "%Y-%m-%d")
           else
             logger.info "Reservation Tour Date class is year last"
-            @reservation.tour_date = Date.strptime(params[:reservation][:tour_date].to_s, "%m/%d/%Y")
+            reservation_string_date_time = params[:parsed_date_from_form].to_s + " " + params[:reservation][:tour_time].to_s + " " + "-10:00"
+            @reservation.tour_date = DateTime.strptime(reservation_string_date_time, "%m/%d/%Y %I:%M %p %:z")
           end
         end
     elsif !params[:reservation][:tour_date].nil?
@@ -39,6 +41,9 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       if @reservation.save
         format.html { redirect_to reservations_path, notice: 'Reservation was successfully created.' }
+      else
+        logger.debug @reservation.errors.full_messages.join(", ")
+        format.html {render "new"}
       end
     end
 

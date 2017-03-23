@@ -1,19 +1,21 @@
 <%= form_for(@reservation) do |f| %>
   <% if @reservation.errors.any? %>
     <div class="row-fluid">
-        <div class="span12">
-            <div id="error_explanation" class="control-group error alert alert-block alert-error">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <p><strong><%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:
-            </strong></p>
-            <ul>
-              <% @reservation.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-              <% end %>
-              </ul>
-          </div>
+      <div class="span12">
+        <div id="error_explanation" class="control-group error alert alert-block alert-error">
+          <p>
+            <strong>
+              <%= pluralize(@reservation.errors.count, "error") %> prohibited this reservation from being saved:
+            </strong>
+          </p>
+          <ul>
+            <% @reservation.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       </div>
-  </div>
+    </div>
   <% end %>
 
   <%= f.hidden_field :aasm_state %>
@@ -83,7 +85,7 @@
   <div class="control-group">
     <%= f.label :tour_time, :class=>"control-label" %>
     <div class="controls">
-       <%= f.select(:tour_time, @tour_times, {:include_blank => true}, :class=>"")%>
+       <%= f.select(:tour_time, @tour_times, {:include_blank => true})%>
     </div>
   </div>
 
