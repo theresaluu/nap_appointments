@@ -14,11 +14,8 @@ here to the production app along with the solution.
 - tour_date DateTime
 - tour_time String
 
-*Additional* reservation attributes I'm going to collect are:
-- timezone String
-- utc_offset Float
+*Solution*
+- format a tour_date by collecting desired date, including the tour_time string, and an offset of -10:00.
+The Hawaiian timezone is safe to do this with because niether it nor UTC does daylight savings time.
 
-By keeping the app timezone to UTC and setting the local timezone per
-reservation, as well as keeping track of the UTC Offset, we can be more accurate
-even when regions change their timezone policies (opting in/out of Daylight
-Savings).
+All validations will be done against the "Hawaii" DateTime.
