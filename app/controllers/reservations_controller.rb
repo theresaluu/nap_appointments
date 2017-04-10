@@ -6,31 +6,10 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(ressie_params)
     @tour_times = Reservation.tour_times
 
-    if !@reservation.tour_date.nil?
-      logger.info "Ressie Tour Date not nil"
-      logger.info "Ressie Tour Date data type is = |#{@reservation.tour_date.class}|"
-      if @reservation.tour_date.class == Date
-        logger.info "Reservation Tour Date class is DATE - no change needed"
-        else
-          if params[:reservation][:tour_date].to_s.start_with?("#{Date.current.year}")
-            logger.info "Reservation Tour Date class is year first"
-            @reservation.tour_date =
-              Date.strptime(params[:reservation][:tour_date].to_s, "%Y-%m-%d")
-          else
-            logger.info "Reservation Tour Date class is year last"
-            reservation_string_date_time = params[:parsed_date_from_form].to_s + " " + params[:reservation][:tour_time].to_s + " " + "-10:00"
-            @reservation.tour_date = DateTime.strptime(reservation_string_date_time, "%m/%d/%Y %I:%M %p %:z")
-          end
-        end
-    elsif !params[:reservation][:tour_date].nil?
-      if params[:reservation][:tour_date].to_s.start_with?("#{Date.current.year}")
-        logger.info "Reservation Tour Date class is year first"
-        @reservation.tour_date = Date.strptime(params[:reservation][:tour_date].to_s, "%Y-%m-%d")
-      else
-        logger.info "Reservation Tour Date class is year last"
-        reservation_string_date_time = params[:parsed_date_from_form].to_s + " " + params[:reservation][:tour_time].to_s + " " + "-10:00"
-        @reservation.tour_date = DateTime.strptime(reservation_string_date_time, "%m/%d/%Y %I:%M %p %:z")
-      end
+    if !params[:reservation][:tour_date].nil?
+      logger.info "Reservation Tour Date class is year last"
+      reservation_string_date_time = params[:parsed_date_from_form].to_s + " " + params[:reservation][:tour_time].to_s + " " + "-10:00"
+      @reservation.tour_date = DateTime.strptime(reservation_string_date_time, "%m/%d/%Y %I:%M %p %:z")
     else
       logger.info "Reservation Tour Date is NIL"
       @reservation.tour_date = nil

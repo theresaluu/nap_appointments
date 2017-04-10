@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "the reservation process" do
+
   it "makes a reservation" do
     visit '/'
     fill_in 'reservation[name]', with: 'President Barack Obama'
@@ -10,7 +11,7 @@ RSpec.describe "the reservation process" do
     select 'CO', :from => 'reservation[state]'
     fill_in 'reservation[zip]', with: '99999'
     select 'UNITED STATES', :from => 'reservation[country]'
-    fill_in 'parsed_date_from_form', with: '03/30/2017'
+    fill_in 'parsed_date_from_form', with: '06/01/2017'
     select '1:00 PM', :from => 'reservation[tour_time]'
     fill_in 'reservation[party_size]', with: '2'
     select '0', :from => 'reservation[children_u12]'

@@ -18,7 +18,7 @@ FactoryGirl.define do
        "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM"].sample
     }
     tour_date         {
-      hawaii_time_string = (Date.current + (rand(2..14).days)).strftime("%m/%d/%Y") + " " + tour_time + " " + "-10:00"
+      hawaii_time_string = (Date.current + (rand(2..14).days)).strftime("%m/%d/%Y") + " #{tour_time}" + " -10:00"
       random = DateTime.strptime( hawaii_time_string, "%m/%d/%Y %I:%M %p %:z")
 
       #if this is a weekend, this will randomly add 2-4 days to ensure weekday
